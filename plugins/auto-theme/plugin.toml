@@ -1,0 +1,9 @@
+[plugin]
+name = "auto-theme"
+version = "0.1.0"
+description = "Automatically switch terminal theme based on macOS appearance"
+author = "Siltty Team"
+api_version = 1
+
+[permissions]
+timer = true

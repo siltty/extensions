@@ -1,0 +1,20 @@
+# Siltty Extensions Registry
+# Each entry maps to a plugin directory under plugins/
+
+[git-status]
+version = "0.1.0"
+description = "Show git branch and status in the status bar"
+author = "Siltty Team"
+category = "development"
+
+[notifications]
+version = "0.1.0"
+description = "Desktop notifications when long-running commands finish"
+author = "Siltty Team"
+category = "productivity"
+
+[auto-theme]
+version = "0.1.0"
+description = "Automatically switch terminal theme based on macOS appearance"
+author = "Siltty Team"
+category = "appearance"
