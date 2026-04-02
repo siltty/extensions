@@ -28,8 +28,12 @@ jobs:
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       # Auth for private siltty/siltty repo (SDK dependency)
+      # 1. Tell cargo to use system git CLI (not libgit2) — needed for auth
+      # 2. Configure git to inject token for github.com
       - name: Configure private repo access
         run: |
+          mkdir -p ~/.cargo
+          echo -e '[net]\ngit-fetch-with-cli = true' >> ~/.cargo/config.toml
           git config --global url."https://x-access-token:${{ secrets.CARGO_GIT_TOKEN }}@github.com/".insteadOf "https://github.com/"
 
       - name: Build all plugins
