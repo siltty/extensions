@@ -3,19 +3,22 @@ on:
   push:
     branches: [main]
     paths: ['plugins/**', 'scripts/**']
+  workflow_dispatch:  # manual trigger
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       pages: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: wasm32-wasip1
+
       - uses: actions/cache@v4
         with:
           path: |
@@ -23,8 +26,15 @@ jobs:
             ~/.cargo/git
             plugins/**/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      # Auth for private siltty/siltty repo (SDK dependency)
+      - name: Configure private repo access
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.CARGO_GIT_TOKEN }}@github.com/".insteadOf "https://github.com/"
+
       - name: Build all plugins
         run: chmod +x scripts/build-all.sh && scripts/build-all.sh
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

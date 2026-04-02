@@ -9,73 +9,70 @@ echo "=== Building Siltty Extensions ==="
 
 mkdir -p "$PUBLIC_DIR/plugins"
 
-PLUGINS=()
+PLUGIN_COUNT=0
+
 for plugin_dir in "$REPO_DIR/plugins"/*/; do
+    [ -d "$plugin_dir" ] || continue
     name=$(basename "$plugin_dir")
     echo "Building: $name"
 
     cd "$plugin_dir"
-    cargo build --target wasm32-wasip1 --release 2>&1 | tail -1
+    cargo build --target wasm32-wasip1 --release
 
-    # Find the built .wasm file
-    wasm_file=$(find target/wasm32-wasip1/release -name "*.wasm" -not -name "*.d" | head -1)
+    wasm_file=$(find target/wasm32-wasip1/release -maxdepth 1 -name "*.wasm" -not -name "*.d" | head -1)
     if [ -z "$wasm_file" ]; then
         echo "  ERROR: no .wasm found for $name"
+        cd "$REPO_DIR"
         continue
     fi
 
-    # Read version from plugin.toml
-    version=$(grep 'version' plugin.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
-
-    # Copy to public
+    version=$(grep '^version' plugin.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
     cp "$wasm_file" "$PUBLIC_DIR/plugins/${name}-v${version}.wasm"
     cp plugin.toml "$PUBLIC_DIR/plugins/${name}.toml"
 
-    size=$(du -h "$PUBLIC_DIR/plugins/${name}-v${version}.wasm" | cut -f1)
-    echo "  -> ${name}-v${version}.wasm ($size)"
+    size=$(wc -c < "$PUBLIC_DIR/plugins/${name}-v${version}.wasm")
+    echo "  → ${name}-v${version}.wasm (${size} bytes)"
 
-    PLUGINS+=("$name")
+    PLUGIN_COUNT=$((PLUGIN_COUNT + 1))
     cd "$REPO_DIR"
 done
 
-# Generate index.json
+# Generate index.json — pure bash, no Python
 echo "Generating index.json..."
-python3 -c "
-import json, tomllib, os
+INDEX="$PUBLIC_DIR/index.json"
+printf '{\n  "version": 1,\n  "plugins": [\n' > "$INDEX"
 
-plugins = []
-for name in sorted(os.listdir('$PUBLIC_DIR/plugins')):
-    if not name.endswith('.toml'):
-        continue
-    plugin_name = name.replace('.toml', '')
-    toml_path = os.path.join('$PUBLIC_DIR/plugins', name)
-    with open(toml_path, 'rb') as f:
-        manifest = tomllib.load(f)
-    info = manifest.get('plugin', {})
-    perms = manifest.get('permissions', {})
-    version = info.get('version', '0.1.0')
-    wasm_file = f'{plugin_name}-v{version}.wasm'
-    wasm_path = os.path.join('$PUBLIC_DIR/plugins', wasm_file)
-    size = os.path.getsize(wasm_path) if os.path.exists(wasm_path) else 0
+FIRST=true
+for toml_file in "$PUBLIC_DIR/plugins"/*.toml; do
+    [ -f "$toml_file" ] || continue
+    id=$(basename "$toml_file" .toml)
+    pname=$(sed -n '/^\[plugin\]/,/^\[/{s/^name *= *"\(.*\)"/\1/p;}' "$toml_file" | head -1)
+    pver=$(sed -n '/^\[plugin\]/,/^\[/{s/^version *= *"\(.*\)"/\1/p;}' "$toml_file" | head -1)
+    pdesc=$(sed -n '/^\[plugin\]/,/^\[/{s/^description *= *"\(.*\)"/\1/p;}' "$toml_file" | head -1)
+    pauthor=$(sed -n '/^\[plugin\]/,/^\[/{s/^author *= *"\(.*\)"/\1/p;}' "$toml_file" | head -1)
+    papi=$(sed -n '/^\[plugin\]/,/^\[/{s/^api_version *= *\([0-9]*\)/\1/p;}' "$toml_file" | head -1)
+    [ -z "$papi" ] && papi="1"
+    [ -z "$pname" ] && pname="$id"
+    [ -z "$pver" ] && pver="0.1.0"
 
-    plugins.append({
-        'id': plugin_name,
-        'name': info.get('name', plugin_name),
-        'version': version,
-        'description': info.get('description', ''),
-        'author': info.get('author', ''),
-        'download': f'plugins/{wasm_file}',
-        'size': size,
-        'permissions': [k for k, v in perms.items() if v],
-        'api_version': info.get('api_version', 1),
-    })
+    wasm="$PUBLIC_DIR/plugins/${id}-v${pver}.wasm"
+    psize=0
+    [ -f "$wasm" ] && psize=$(wc -c < "$wasm" | tr -d ' ')
 
-index = {'version': 1, 'plugins': plugins}
-with open('$PUBLIC_DIR/index.json', 'w') as f:
-    json.dump(index, f, indent=2)
-print(f'Generated index.json with {len(plugins)} plugins')
-" 2>&1
+    perms=""
+    while IFS= read -r line; do
+        key=$(echo "$line" | sed 's/ *= *true//' | tr -d ' ')
+        [ -n "$key" ] && perms="${perms}\"${key}\","
+    done < <(sed -n '/^\[permissions\]/,/^\[/{/= *true/p;}' "$toml_file")
+    perms="${perms%,}"
+
+    [ "$FIRST" = true ] && FIRST=false || printf ',\n' >> "$INDEX"
+    printf '    {"id":"%s","name":"%s","version":"%s","description":"%s","author":"%s","download":"plugins/%s-v%s.wasm","size":%s,"permissions":[%s],"api_version":%s}' \
+        "$id" "$pname" "$pver" "$pdesc" "$pauthor" "$id" "$pver" "$psize" "$perms" "$papi" >> "$INDEX"
+done
+
+printf '\n  ]\n}\n' >> "$INDEX"
 
 echo ""
-echo "=== Done: ${#PLUGINS[@]} plugins built ==="
-echo "Output: $PUBLIC_DIR/"
+echo "=== Done: ${PLUGIN_COUNT} plugins built ==="
+cat "$INDEX"

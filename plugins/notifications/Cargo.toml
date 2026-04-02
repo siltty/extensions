@@ -7,7 +7,7 @@ edition = "2024"
 crate-type = ["cdylib"]
 
 [dependencies]
-siltty-plugin-sdk = { path = "/Users/grigorij/Documents/GreatLove/Crazy/Siltty/crates/siltty-plugin-sdk" }
+siltty-plugin-sdk = { git = "https://github.com/siltty/siltty" }
 
 [profile.release]
 panic = "abort"
