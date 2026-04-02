@@ -1,0 +1,9 @@
+[plugin]
+name = "notifications"
+version = "0.1.0"
+description = "Show command exit status and desktop notifications"
+author = "Siltty Team"
+api_version = 1
+
+[permissions]
+notifications = true

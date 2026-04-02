@@ -1,0 +1,11 @@
+[plugin]
+name = "git-status"
+version = "0.1.0"
+description = "Show git repository status in the terminal status bar"
+author = "Siltty Team"
+api_version = 1
+
+[permissions]
+filesystem = [".git", "~/.gitconfig"]
+timer = false
+notifications = false

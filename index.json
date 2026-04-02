@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "plugins": [
+    {"id":"auto-theme","name":"auto-theme","version":"0.1.0","description":"Automatically switch terminal theme based on macOS appearance","author":"Siltty Team","download":"plugins/auto-theme-v0.1.0.wasm","size":233,"permissions":["timer"],"api_version":1},
+    {"id":"git-status","name":"git-status","version":"0.1.0","description":"Show git repository status in the terminal status bar","author":"Siltty Team","download":"plugins/git-status-v0.1.0.wasm","size":30740,"permissions":[],"api_version":1},
+    {"id":"notifications","name":"notifications","version":"0.1.0","description":"Show command exit status and desktop notifications","author":"Siltty Team","download":"plugins/notifications-v0.1.0.wasm","size":31177,"permissions":["notifications"],"api_version":1}
+  ]
+}
