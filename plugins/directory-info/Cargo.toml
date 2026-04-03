@@ -1,0 +1,16 @@
+[package]
+name = "siltty-plugin-directory-info"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+siltty-plugin-sdk = { git = "https://github.com/siltty/siltty" }
+
+[profile.release]
+panic = "abort"
+opt-level = "s"
+strip = true
+lto = true

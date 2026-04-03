@@ -1,7 +1,7 @@
 [plugin]
 name = "notifications"
-version = "0.1.0"
-description = "Show command exit status and desktop notifications"
+version = "1.0.0"
+description = "Command exit status + desktop notifications for long-running commands"
 author = "Siltty Team"
 api_version = 1
 

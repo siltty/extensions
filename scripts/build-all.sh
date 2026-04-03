@@ -73,6 +73,10 @@ done
 
 printf '\n  ]\n}\n' >> "$INDEX"
 
+# Generate minified version (strip whitespace + newlines)
+tr -d '\n' < "$INDEX" | sed 's/  */ /g' > "$PUBLIC_DIR/index.min.json"
+
 echo ""
 echo "=== Done: ${PLUGIN_COUNT} plugins built ==="
-cat "$INDEX"
+echo "index.json: $(wc -c < "$INDEX" | tr -d ' ') bytes"
+echo "index.min.json: $(wc -c < "$PUBLIC_DIR/index.min.json" | tr -d ' ') bytes"

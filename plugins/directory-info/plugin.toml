@@ -1,0 +1,16 @@
+[plugin]
+name = "directory-info"
+version = "0.1.0"
+description = "Show current directory info: file count, git repo size, project type detection"
+author = "Siltty Team"
+api_version = 1
+
+[permissions]
+filesystem = ["."]
+exec = ["ls", "wc", "du"]
+timer = true
+
+[permissions.exec_safe]
+ls = ["-1", "-la", "-A"]
+wc = ["-l"]
+du = ["-sh", "-s"]

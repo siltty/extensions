@@ -1,0 +1,9 @@
+[plugin]
+name = "command-timer"
+version = "0.1.0"
+description = "Live timer showing how long the current command has been running"
+author = "Siltty Team"
+api_version = 1
+
+[permissions]
+timer = true
