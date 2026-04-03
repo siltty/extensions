@@ -1,10 +1,10 @@
 {
   "version": 1,
   "plugins": [
-    {"id":"auto-theme","name":"auto-theme","version":"0.1.0","description":"Automatically switch terminal theme based on macOS appearance","author":"Siltty Team","download":"plugins/auto-theme-v0.1.0.wasm","size":233,"permissions":["timer"],"api_version":1},
-    {"id":"command-timer","name":"command-timer","version":"0.1.0","description":"Live timer showing how long the current command has been running","author":"Siltty Team","download":"plugins/command-timer-v0.1.0.wasm","size":29775,"permissions":["timer"],"api_version":1},
-    {"id":"directory-info","name":"directory-info","version":"0.1.0","description":"Show current directory info: file count, git repo size, project type detection","author":"Siltty Team","download":"plugins/directory-info-v0.1.0.wasm","size":34375,"permissions":["timer"],"api_version":1},
-    {"id":"git-status","name":"git-status","version":"0.2.0","description":"Show git branch and status in the terminal status bar","author":"Siltty Team","download":"plugins/git-status-v0.2.0.wasm","size":33278,"permissions":["timer"],"api_version":1},
-    {"id":"notifications","name":"notifications","version":"1.0.0","description":"Command exit status + desktop notifications for long-running commands","author":"Siltty Team","download":"plugins/notifications-v1.0.0.wasm","size":34283,"permissions":["notifications"],"api_version":1}
+    {"id":"auto-theme","name":"auto-theme","version":"0.1.0","description":"Automatically switch terminal theme based on macOS appearance","author":"Siltty Team","download":"plugins/auto-theme-v0.1.0.wasm","size":233,"sha256":"41cc82dc183e2b731cdee63465a708b2906f72c67438b2681d26a55677dd2c33","permissions":["timer"],"api_version":1},
+    {"id":"command-timer","name":"command-timer","version":"0.1.0","description":"Live timer showing how long the current command has been running","author":"Siltty Team","download":"plugins/command-timer-v0.1.0.wasm","size":447,"sha256":"3f2b0b55d08ccab1f373cb8532476cee5fe66d992f7b584f132784593afc4954","permissions":["timer"],"api_version":1},
+    {"id":"directory-info","name":"directory-info","version":"0.1.0","description":"Show current directory info: file count, git repo size, project type detection","author":"Siltty Team","download":"plugins/directory-info-v0.1.0.wasm","size":34375,"sha256":"fce330421d4fd0fbcfa758ae4205ff5fe0ce70fb9df00338ef722909b6fc6943","permissions":["timer"],"api_version":1},
+    {"id":"git-status","name":"git-status","version":"0.2.0","description":"Show git branch and status in the terminal status bar","author":"Siltty Team","download":"plugins/git-status-v0.2.0.wasm","size":33278,"sha256":"60220de4f88b29e839a0d9e1d6f7636275fae30a05649a92e6c389e62933ac6e","permissions":["timer"],"api_version":1},
+    {"id":"notifications","name":"notifications","version":"1.0.0","description":"Command exit status + desktop notifications for long-running commands","author":"Siltty Team","download":"plugins/notifications-v1.0.0.wasm","size":34283,"sha256":"52f2c843dd48bac57d830b38b48955f7f8fcdb2d44559e5a3d174d597354fc6e","permissions":["notifications"],"api_version":1}
   ]
 }
