@@ -1,61 +1,67 @@
 //! Command Timer Plugin
 //!
 //! Shows a live timer while a command is running.
-//! Resets on each new prompt.
+//! Timer starts when command begins (on_command_start via prompt end)
+//! and stops when the next prompt appears.
 
 use siltty_plugin_sdk as siltty;
 
-static mut RUNNING: bool = false;
+static mut IDLE: bool = true;
 static mut TICKS: u32 = 0;
+static mut PROMPT_SEEN: bool = false;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn on_init() {
-    siltty::log("command-timer v0.1.0 loaded");
-    siltty::set_status_priority(10); // low priority (rightmost)
-    siltty::set_status_color("#565f89"); // dimmed
-    siltty::set_timer_interval(1000); // tick every second
+    siltty::log("command-timer v0.2.0 loaded");
+    siltty::set_status_priority(10);
+    siltty::set_status_color("#565f89");
+    siltty::set_timer_interval(1000);
+    siltty::set_status_text("");
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn on_prompt() {
-    // Command finished, prompt appeared — stop timer
+    // Prompt appeared → command finished, we're idle
     unsafe {
-        if RUNNING && TICKS > 0 {
+        if !IDLE && TICKS > 2 {
+            // Show final time briefly
             let elapsed = format_time(TICKS);
-            siltty::set_status_text(&format!("\u{23f1} {elapsed}"));
-            siltty::set_status_color("#565f89"); // dim after done
-        } else {
-            siltty::set_status_text("");
+            siltty::set_status_text(&format!("\u{2713} {elapsed}"));
+            siltty::set_status_color("#565f89");
         }
-        RUNNING = false;
+        IDLE = true;
         TICKS = 0;
+        PROMPT_SEEN = true;
     }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn on_command_finish() {
-    // Alias for on_prompt — command ended
     unsafe {
-        RUNNING = false;
+        IDLE = true;
     }
 }
 
 #[unsafe(no_mangle)]
 pub extern "C" fn on_timer() {
     unsafe {
-        if !RUNNING {
-            // Detect if a command is running by checking if there is no recent prompt
-            // Heuristic: if on_prompt hasn't been called recently, a command is running
-            TICKS += 1;
-            if TICKS >= 3 {
-                // After 3 seconds without prompt, assume command is running
-                RUNNING = true;
+        if IDLE {
+            // If we're idle and prompt was seen, the timer has nothing to show.
+            // Only start counting when prompt_seen transitions from true to
+            // false (meaning a command was submitted).
+            if PROMPT_SEEN {
+                // We saw a prompt. Next timer tick without on_prompt means
+                // a command is now running.
+                PROMPT_SEEN = false;
             }
+            return;
         }
-        if RUNNING {
-            TICKS += 1;
+        // We're running a command
+        TICKS += 1;
+        if TICKS >= 2 {
+            // Only show timer after 2 seconds (short commands don't need it)
             let elapsed = format_time(TICKS);
-            siltty::set_status_color("#e0af68"); // yellow while running
+            siltty::set_status_color("#e0af68");
             siltty::set_status_text(&format!("\u{23f1} {elapsed}"));
         }
     }

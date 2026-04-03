@@ -59,6 +59,12 @@ for toml_file in "$PUBLIC_DIR/plugins"/*.toml; do
     psize=0
     [ -f "$wasm" ] && psize=$(wc -c < "$wasm" | tr -d ' ')
 
+    # SHA-256 checksum for integrity verification
+    psha256=""
+    if [ -f "$wasm" ]; then
+        psha256=$(shasum -a 256 "$wasm" | cut -d' ' -f1)
+    fi
+
     perms=""
     while IFS= read -r line; do
         key=$(echo "$line" | sed 's/ *= *true//' | tr -d ' ')
@@ -67,8 +73,8 @@ for toml_file in "$PUBLIC_DIR/plugins"/*.toml; do
     perms="${perms%,}"
 
     [ "$FIRST" = true ] && FIRST=false || printf ',\n' >> "$INDEX"
-    printf '    {"id":"%s","name":"%s","version":"%s","description":"%s","author":"%s","download":"plugins/%s-v%s.wasm","size":%s,"permissions":[%s],"api_version":%s}' \
-        "$id" "$pname" "$pver" "$pdesc" "$pauthor" "$id" "$pver" "$psize" "$perms" "$papi" >> "$INDEX"
+    printf '    {"id":"%s","name":"%s","version":"%s","description":"%s","author":"%s","download":"plugins/%s-v%s.wasm","size":%s,"sha256":"%s","permissions":[%s],"api_version":%s}' \
+        "$id" "$pname" "$pver" "$pdesc" "$pauthor" "$id" "$pver" "$psize" "$psha256" "$perms" "$papi" >> "$INDEX"
 done
 
 printf '\n  ]\n}\n' >> "$INDEX"
