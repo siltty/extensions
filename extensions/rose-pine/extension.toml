@@ -1,0 +1,18 @@
+[extension]
+id = "rose-pine"
+name = "Rosé Pine"
+type = "theme"
+version = "1.0.0"
+description = "All natural pine, faux fur and a bit of soho vibes for the classy minimalist"
+author = "Rosé Pine"
+license = "MIT"
+
+[[themes]]
+id = "rose-pine"
+file = "themes/rose-pine.toml"
+variant = "dark"
+
+[[themes]]
+id = "rose-pine-moon"
+file = "themes/rose-pine-moon.toml"
+variant = "dark"

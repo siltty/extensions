@@ -1,0 +1,20 @@
+[extension]
+id = "smart-history"
+name = "Smart History"
+type = "plugin"
+version = "0.1.0"
+description = "Smart command history: tracks commands, shows stats, detects errors, sends notifications"
+author = "Siltty Team"
+license = "Apache-2.0"
+
+[plugin]
+api_version = 1
+
+[permissions]
+filesystem = ["."]
+exec = ["wc"]
+timer = true
+notifications = true
+
+[permissions.exec_safe]
+wc = ["-l", "-w", "-c"]

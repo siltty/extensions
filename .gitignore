@@ -1,6 +1,7 @@
 /target
 **/target
-/public/plugins/
+/public/extensions/
 /public/index.json
+/public/index.min.json
+/public/.nojekyll
 .DS_Store
-test.txt

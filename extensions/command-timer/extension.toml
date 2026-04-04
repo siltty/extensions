@@ -1,8 +1,13 @@
-[plugin]
-name = "command-timer"
-version = "0.1.0"
+[extension]
+id = "command-timer"
+name = "Command Timer"
+type = "plugin"
+version = "0.2.0"
 description = "Live timer showing how long the current command has been running"
 author = "Siltty Team"
+license = "Apache-2.0"
+
+[plugin]
 api_version = 1
 
 [permissions]

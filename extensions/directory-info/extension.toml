@@ -1,8 +1,13 @@
-[plugin]
-name = "directory-info"
+[extension]
+id = "directory-info"
+name = "Directory Info"
+type = "plugin"
 version = "0.1.0"
 description = "Show current directory info: file count, git repo size, project type detection"
 author = "Siltty Team"
+license = "Apache-2.0"
+
+[plugin]
 api_version = 1
 
 [permissions]
@@ -11,6 +16,6 @@ exec = ["ls", "wc", "du"]
 timer = true
 
 [permissions.exec_safe]
-ls = ["-1", "-la", "-A"]
+ls = ["-1", "-la", "-A", "-1A"]
 wc = ["-l"]
 du = ["-sh", "-s"]

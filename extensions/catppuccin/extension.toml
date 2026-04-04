@@ -1,0 +1,28 @@
+[extension]
+id = "catppuccin"
+name = "Catppuccin"
+type = "theme"
+version = "1.0.0"
+description = "Soothing pastel theme for the high-spirited"
+author = "Catppuccin"
+license = "MIT"
+
+[[themes]]
+id = "catppuccin-mocha"
+file = "themes/catppuccin-mocha.toml"
+variant = "dark"
+
+[[themes]]
+id = "catppuccin-macchiato"
+file = "themes/catppuccin-macchiato.toml"
+variant = "dark"
+
+[[themes]]
+id = "catppuccin-frappe"
+file = "themes/catppuccin-frappe.toml"
+variant = "dark"
+
+[[themes]]
+id = "catppuccin-latte"
+file = "themes/catppuccin-latte.toml"
+variant = "light"

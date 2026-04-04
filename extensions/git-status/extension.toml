@@ -1,8 +1,13 @@
-[plugin]
-name = "git-status"
+[extension]
+id = "git-status"
+name = "Git Status"
+type = "plugin"
 version = "0.2.0"
 description = "Show git branch and status in the terminal status bar"
 author = "Siltty Team"
+license = "Apache-2.0"
+
+[plugin]
 api_version = 1
 
 [permissions]

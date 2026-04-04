@@ -1,8 +1,13 @@
-[plugin]
-name = "auto-theme"
+[extension]
+id = "auto-theme"
+name = "Auto Theme"
+type = "plugin"
 version = "0.1.0"
 description = "Automatically switch terminal theme based on macOS appearance"
 author = "Siltty Team"
+license = "Apache-2.0"
+
+[plugin]
 api_version = 1
 
 [permissions]

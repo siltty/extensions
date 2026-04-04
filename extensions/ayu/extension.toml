@@ -1,0 +1,13 @@
+[extension]
+id = "ayu"
+name = "Ayu"
+type = "theme"
+version = "1.0.0"
+description = "Simple, bright and elegant theme"
+author = "ayu-theme"
+license = "MIT"
+
+[[themes]]
+id = "ayu-dark"
+file = "themes/ayu-dark.toml"
+variant = "dark"
