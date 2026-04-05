@@ -1,0 +1,13 @@
+[extension]
+id = "kanagawa"
+name = "Kanagawa"
+type = "theme"
+version = "1.0.0"
+description = "Dark colorscheme inspired by the famous painting by Katsushika Hokusai"
+author = "rebelot"
+license = "MIT"
+
+[[themes]]
+id = "kanagawa"
+file = "themes/kanagawa.toml"
+variant = "dark"

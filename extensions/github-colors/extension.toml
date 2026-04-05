@@ -1,0 +1,13 @@
+[extension]
+id = "github-colors"
+name = "GitHub Colors"
+type = "theme"
+version = "1.0.0"
+description = "GitHub's official color themes"
+author = "GitHub"
+license = "MIT"
+
+[[themes]]
+id = "github-dark"
+file = "themes/github-dark.toml"
+variant = "dark"

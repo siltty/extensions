@@ -1,0 +1,13 @@
+[extension]
+id = "everforest"
+name = "Everforest"
+type = "theme"
+version = "1.0.0"
+description = "Comfortable and pleasant green-based colorscheme"
+author = "sainnhe"
+license = "MIT"
+
+[[themes]]
+id = "everforest-dark"
+file = "themes/everforest-dark.toml"
+variant = "dark"
