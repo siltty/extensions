@@ -1,4 +1,4 @@
-use siltty_plugin_sdk as siltty;
+use siltty_ext_sdk as siltty;
 
 static mut SECONDS_SINCE_PROMPT: u32 = 0;
 static mut SHOW_TIMER: bool = false;

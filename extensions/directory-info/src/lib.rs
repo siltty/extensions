@@ -2,7 +2,7 @@
 //!
 //! Shows project type + file count. Updates on cd + timer fallback.
 
-use siltty_plugin_sdk as siltty;
+use siltty_ext_sdk as siltty;
 use std::cell::Cell;
 
 struct State { last_cwd: Cell<u64> }

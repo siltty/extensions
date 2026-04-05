@@ -3,7 +3,7 @@
 //! Shows command exit status in the status bar.
 //! Sends desktop notification when a long-running command finishes.
 
-use siltty_plugin_sdk as siltty;
+use siltty_ext_sdk as siltty;
 
 static mut COMMAND_START: u64 = 0;
 

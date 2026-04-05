@@ -10,7 +10,7 @@
 //! - CWD change detection
 //! - Exec (file counting)
 
-use siltty_plugin_sdk as siltty;
+use siltty_ext_sdk as siltty;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn on_init() {

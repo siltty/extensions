@@ -7,7 +7,7 @@ edition = "2024"
 crate-type = ["cdylib"]
 
 [dependencies]
-siltty-plugin-sdk = { git = "https://github.com/siltty/siltty" }
+siltty-ext-sdk = { git = "https://github.com/siltty/siltty" }
 
 [profile.release]
 panic = "abort"

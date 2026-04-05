@@ -3,7 +3,7 @@
 //! Shows git branch and dirty status. Only checks when something changes.
 //! Timer as fallback for initial load (CWD not available in on_init).
 
-use siltty_plugin_sdk as siltty;
+use siltty_ext_sdk as siltty;
 use std::cell::Cell;
 
 // WASM is single-threaded — Cell is safe for global state
